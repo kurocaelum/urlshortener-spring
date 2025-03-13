@@ -3,17 +3,27 @@ package com.victorbrandao.url_shortener.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class URLShort implements Serializable {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "short_url")
+public class ShortUrl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String identifier;
 	private String urlOriginal;
 	private String urlShortened;
 	
-	public URLShort(){}
+	public ShortUrl(){}
 
-	public URLShort(Long id, String identifier, String urlOriginal, String urlShortened) {
+	public ShortUrl(Long id, String identifier, String urlOriginal, String urlShortened) {
 		super();
 		this.id = id;
 		this.identifier = identifier;
@@ -66,7 +76,7 @@ public class URLShort implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		URLShort other = (URLShort) obj;
+		ShortUrl other = (ShortUrl) obj;
 		return Objects.equals(id, other.id);
 	}
 	
