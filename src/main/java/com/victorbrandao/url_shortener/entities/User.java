@@ -1,22 +1,27 @@
 package com.victorbrandao.url_shortener.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "tb_user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String password;
-	private List<ShortUrl> shortUrls = new ArrayList<ShortUrl>();
+//	private List<ShortUrl> shortUrls = new ArrayList<ShortUrl>();
 	
 	public User(){}
 
@@ -55,9 +60,9 @@ public class User implements Serializable {
 		return serialVersionUID;
 	}
 
-	public List<ShortUrl> getShortUrls() {
-		return shortUrls;
-	}
+//	public List<ShortUrl> getShortUrls() {
+//		return shortUrls;
+//	}
 
 	@Override
 	public int hashCode() {
