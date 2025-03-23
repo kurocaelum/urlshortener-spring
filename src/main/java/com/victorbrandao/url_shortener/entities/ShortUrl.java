@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,14 +23,19 @@ public class ShortUrl implements Serializable {
 	private String urlOriginal;
 	private String urlShortened;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	public ShortUrl(){}
 
-	public ShortUrl(Long id, String identifier, String urlOriginal, String urlShortened) {
+	public ShortUrl(Long id, String identifier, String urlOriginal, String urlShortened, User user) {
 		super();
 		this.id = id;
 		this.identifier = identifier;
 		this.urlOriginal = urlOriginal;
 		this.urlShortened = urlShortened;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -61,6 +68,14 @@ public class ShortUrl implements Serializable {
 
 	public void seturlShortened(String uRLShortened) {
 		urlShortened = uRLShortened;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
