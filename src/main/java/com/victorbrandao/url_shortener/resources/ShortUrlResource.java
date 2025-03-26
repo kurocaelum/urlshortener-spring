@@ -13,7 +13,7 @@ import com.victorbrandao.url_shortener.entities.ShortUrl;
 import com.victorbrandao.url_shortener.services.ShortUrlService;
 
 @RestController
-@RequestMapping(value = "/shortUrl")
+@RequestMapping(value = "/shorturls")
 public class ShortUrlResource {
 	
 	@Autowired
