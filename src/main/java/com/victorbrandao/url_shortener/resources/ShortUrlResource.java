@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.victorbrandao.url_shortener.dto.ShortUrlCreationDTO;
 import com.victorbrandao.url_shortener.entities.ShortUrl;
 import com.victorbrandao.url_shortener.services.ShortUrlService;
 
@@ -36,9 +37,10 @@ public class ShortUrlResource {
 		ShortUrl obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+		
 	@PostMapping
-	public ResponseEntity<ShortUrl> insert(@RequestBody ShortUrl obj) {
+	public ResponseEntity<ShortUrl> insert(@RequestBody ShortUrlCreationDTO objDto) {
+		ShortUrl obj = service.fromCreationDTO(objDto);
 		obj = service.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

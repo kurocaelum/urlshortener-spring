@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.victorbrandao.url_shortener.dto.ShortUrlCreationDTO;
 import com.victorbrandao.url_shortener.entities.ShortUrl;
 import com.victorbrandao.url_shortener.repositories.ShortUrlRepository;
 import com.victorbrandao.url_shortener.services.exceptions.DatabaseException;
@@ -19,26 +20,40 @@ import jakarta.persistence.EntityNotFoundException;
 public class ShortUrlService {
 
 	@Autowired
-	private ShortUrlRepository repository;
+	private ShortUrlRepository shortUrlRepository;
+		
+	@Autowired
+	private UserService userService;
+	
+	public ShortUrl fromCreationDTO(ShortUrlCreationDTO objDto) {
+		// TODO gerar lógica de encurtamento e substituir valor fixo passado em urlShortened
+		ShortUrl obj = new ShortUrl();
+		obj.setIdentifier(objDto.getIdentifier());
+		obj.seturlOriginal(objDto.getUrlOriginal());
+		obj.seturlShortened("https://www.youtube.com/watch?v=d7SYy5JvyOA");
+		obj.setUser(userService.findById(objDto.getUserId()));
+				
+		return obj;
+	}
 	
 	public List<ShortUrl> findAll() {
-		return repository.findAll();
+		return shortUrlRepository.findAll();
 	}
 	
 	public ShortUrl findById(Long id) {
-		Optional<ShortUrl> obj = repository.findById(id);
+		Optional<ShortUrl> obj = shortUrlRepository.findById(id);
 		return obj.get();
 	}
 	
 	public ShortUrl insert(ShortUrl obj) {
-		return repository.save(obj);
+		return shortUrlRepository.save(obj);
 	}
 	
 	public void delete(Long id) {
 		try {
-			if (!repository.existsById(id))
+			if (!shortUrlRepository.existsById(id))
 				throw new ResourceNotFoundException(id);
-			repository.deleteById(id);
+			shortUrlRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
@@ -48,10 +63,10 @@ public class ShortUrlService {
 	
 	public ShortUrl update(Long id, ShortUrl obj) {
 		try {
-			ShortUrl entity = repository.getReferenceById(id);
+			ShortUrl entity = shortUrlRepository.getReferenceById(id);
 			updateData(entity, obj);
 				
-			return repository.save(entity);
+			return shortUrlRepository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
