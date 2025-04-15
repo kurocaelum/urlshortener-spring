@@ -18,6 +18,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ShortUrlService {
+	
+	private static final String ELEMENTS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final int LIMITER = 14776336; // 10000 em base 62
 
 	@Autowired
 	private ShortUrlRepository shortUrlRepository;
@@ -25,12 +28,42 @@ public class ShortUrlService {
 	@Autowired
 	private UserService userService;
 	
+	public String encode(Long n) {
+		StringBuilder sb = new StringBuilder();
+		int d = 0;
+		
+		while(n > LIMITER) {
+			d++;
+			n -= LIMITER;
+		}
+		
+		while(n != 0) {
+			sb.insert(0, ELEMENTS.charAt(n.intValue() % 62));
+			n /= 62;
+		}
+		
+		if(d > 0)
+			sb.insert(0, d);
+
+		while(sb.length() < 5) {
+            if(d > 0)
+            	sb.insert(1, '0');
+            else
+            	sb.insert(0, '0');
+        }
+		
+		return "https://short.url/" + sb.toString();
+	}
+	
+//	TODO
+//	public String decode(String url) {
+//		
+//	}
+	
 	public ShortUrl fromCreationDTO(ShortUrlCreationDTO objDto) {
-		// TODO gerar lógica de encurtamento e substituir valor fixo passado em urlShortened
 		ShortUrl obj = new ShortUrl();
 		obj.setIdentifier(objDto.getIdentifier());
 		obj.seturlOriginal(objDto.getUrlOriginal());
-		obj.seturlShortened("https://www.youtube.com/watch?v=d7SYy5JvyOA");
 		obj.setUser(userService.findById(objDto.getUserId()));
 				
 		return obj;

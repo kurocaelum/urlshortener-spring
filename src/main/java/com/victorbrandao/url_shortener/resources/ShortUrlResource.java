@@ -43,6 +43,9 @@ public class ShortUrlResource {
 		ShortUrl obj = service.fromCreationDTO(objDto);
 		obj = service.insert(obj);
 		
+		obj.seturlShortened(service.encode(obj.getId()));
+		obj = service.update(obj.getId(), obj);
+		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
 		
