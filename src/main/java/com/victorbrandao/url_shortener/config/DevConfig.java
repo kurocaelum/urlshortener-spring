@@ -1,5 +1,6 @@
 package com.victorbrandao.url_shortener.config;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class DevConfig implements CommandLineRunner {
 //		User u1 = new User(null, "Victor", "123456");
 //		User u2 = new User(null, "Jiraya", "123456");
 //		
-//		ShortUrl s1 = new ShortUrl(null, "Teste 1", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_table_test", "https://youtu.be/M4R_XUSTCcc", u1);
-//		ShortUrl s2 = new ShortUrl(null, "Teste 2", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_table_test", "https://youtu.be/M4R_XUSTCcc", u2);
+//		ShortUrl s1 = new ShortUrl(null, "Teste 1", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_table_test", "https://short.url/00001", u1, LocalDate.of(2025, 4, 15));
+//		ShortUrl s2 = new ShortUrl(null, "Teste 2", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_table_test", "https://short.url/00002", u2, LocalDate.of(2013, 4, 7));
 //		
 //		
 //		userRepository.saveAll(Arrays.asList(u1, u2));

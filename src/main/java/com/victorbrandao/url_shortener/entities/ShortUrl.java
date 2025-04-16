@@ -1,6 +1,7 @@
 package com.victorbrandao.url_shortener.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -22,6 +23,7 @@ public class ShortUrl implements Serializable {
 	private String identifier;
 	private String urlOriginal;
 	private String urlShortened;
+	private LocalDate date;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -29,13 +31,14 @@ public class ShortUrl implements Serializable {
 	
 	public ShortUrl(){}
 
-	public ShortUrl(Long id, String identifier, String urlOriginal, String urlShortened, User user) {
+	public ShortUrl(Long id, String identifier, String urlOriginal, String urlShortened, User user, LocalDate date) {
 		super();
 		this.id = id;
 		this.identifier = identifier;
 		this.urlOriginal = urlOriginal;
 		this.urlShortened = urlShortened;
 		this.user = user;
+		this.date = date;
 	}
 
 	public Long getId() {
@@ -76,6 +79,14 @@ public class ShortUrl implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 	@Override

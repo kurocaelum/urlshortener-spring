@@ -1,5 +1,6 @@
 package com.victorbrandao.url_shortener.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,7 @@ public class ShortUrlService {
 		obj.setIdentifier(objDto.getIdentifier());
 		obj.seturlOriginal(objDto.getUrlOriginal());
 		obj.setUser(userService.findById(objDto.getUserId()));
+		obj.setDate(LocalDate.now());
 				
 		return obj;
 	}
