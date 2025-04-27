@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.victorbrandao.url_shortener.dto.AuthenticationDTO;
+import com.victorbrandao.url_shortener.dto.LoginResponseDTO;
 import com.victorbrandao.url_shortener.entities.User;
 import com.victorbrandao.url_shortener.repositories.UserRepository;
+import com.victorbrandao.url_shortener.services.TokenService;
 
 import jakarta.validation.Valid;
 
@@ -25,13 +27,18 @@ public class AuthenticationResource {
 	
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		
-		return ResponseEntity.ok().build();
+		var token = tokenService.generateToken((User) auth.getPrincipal());
+		
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 	
 	@PostMapping("register")
