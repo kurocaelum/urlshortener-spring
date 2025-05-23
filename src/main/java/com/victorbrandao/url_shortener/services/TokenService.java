@@ -26,6 +26,7 @@ public class TokenService {
 			String token = JWT.create()
 					.withIssuer("shorturl")
 					.withSubject(user.getUsername())
+//					.withSubject(user.getId().toString())
 					.withExpiresAt(genExpirationDate())
 					.sign(algorithm);
 			
