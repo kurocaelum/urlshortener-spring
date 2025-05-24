@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.victorbrandao.url_shortener.dto.UserDTO;
 import com.victorbrandao.url_shortener.entities.User;
 import com.victorbrandao.url_shortener.repositories.UserRepository;
 import com.victorbrandao.url_shortener.services.exceptions.DatabaseException;
@@ -21,6 +22,10 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 	
+	public UserDTO toUserDTO(User user) {
+		return new UserDTO(user.getId(), user.getUsername(), user.getShortUrls());
+	}
+	
 	public List<User> findAll() {
 		return repository.findAll();
 	}
@@ -30,9 +35,9 @@ public class UserService {
 		return obj.get();
 	}
 
-	public User findUserByUsername(String username) {
+	public UserDTO findUserByUsername(String username) {
 		Optional<User> obj = repository.findUserByUsername(username);
-		return obj.get();
+		return this.toUserDTO(obj.get());
 	}
 	
 	public User insert(User obj) {

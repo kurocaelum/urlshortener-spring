@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.victorbrandao.url_shortener.dto.UserDTO;
 import com.victorbrandao.url_shortener.entities.User;
 import com.victorbrandao.url_shortener.services.UserService;
 
@@ -30,10 +31,10 @@ public class UserResource {
 		List<User> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{username}")
-	public ResponseEntity<User> findUserByUsername(@PathVariable String username) {
-		User obj = service.findUserByUsername(username);
+	public ResponseEntity<UserDTO> findUserByUsername(@PathVariable String username) {
+		UserDTO obj = service.findUserByUsername(username);
 		return ResponseEntity.ok().body(obj);
 	}
 	
