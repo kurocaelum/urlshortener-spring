@@ -37,6 +37,12 @@ public class ShortUrlResource {
 		ShortUrl obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@GetMapping(value = "/source/{urlFrag}")
+	public ResponseEntity<ShortUrl> findByShortUrl(@PathVariable String urlFrag) {
+		ShortUrl obj = service.findByShortUrl(urlFrag);
+		return ResponseEntity.ok().body(obj);
+	}
 		
 	@PostMapping
 	public ResponseEntity<ShortUrl> insert(@RequestBody ShortUrlCreationDTO objDto) {

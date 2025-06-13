@@ -53,13 +53,9 @@ public class ShortUrlService {
             	sb.insert(0, '0');
         }
 		
-		return "https://short.url/" + sb.toString();
+//		return "https://short.url/" + sb.toString();
+		return "http://localhost:4200/" + sb.toString();
 	}
-	
-//	TODO
-//	public String decode(String url) {
-//		
-//	}
 	
 	public ShortUrl fromCreationDTO(ShortUrlCreationDTO objDto) {
 		ShortUrl obj = new ShortUrl();
@@ -77,6 +73,11 @@ public class ShortUrlService {
 	
 	public ShortUrl findById(Long id) {
 		Optional<ShortUrl> obj = shortUrlRepository.findById(id);
+		return obj.get();
+	}
+	
+	public ShortUrl findByShortUrl(String urlFrag) {
+		Optional<ShortUrl> obj = shortUrlRepository.findByUrlShortened("http://localhost:4200/" + urlFrag);
 		return obj.get();
 	}
 	
